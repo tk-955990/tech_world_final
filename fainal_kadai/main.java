@@ -67,15 +67,19 @@ public class main {
 				break;
 			}
 		}
-
-
+		
 		int[][] setStone = new int[8][8];
+		int[][] board;
+		int i = returnValue[1];
+		int j = returnValue[2];
+		
 
-		int i = 0;
-		int j = 0;
-		setStone[i] = returnValue[1];
-		setStone[j] = returnValue[2];
+		board=setStone;
+		System.out.println(setStone[i]);
+		System.out.println(setStone[j]);
 
+		board[i][j]=-1;
+		System.out.println(board[i][j]);
 		tool.printBoard(board);
 
 		// コマの八方向の判定

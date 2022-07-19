@@ -7,7 +7,7 @@ public class Tool {
 		System.out.println("   A   B   C   D   E   F   G   H");
 		System.out.println(" ┏━┳━┳━┳━┳━┳━┳━┳━┓");
 
-		
+
 		for(int i=0;i<board.length;i++) {
 			System.out.print((i+1)+"┃");
 			for(int j=0;j<8;j++) {
@@ -40,7 +40,7 @@ public class Tool {
 			checkValue = 0;
 			return checkValue;
 		}
-		
+
 		// 入力値の変換
 		char charTurn = strInputTurn.charAt(0);
 
@@ -155,8 +155,10 @@ public class Tool {
 		return returnValue;
 	}
 
-	public void stone(int[][]setStone) {
+	public void stone(int[] returnValue) {
 
 
+		
+		return;
 	}
 }
