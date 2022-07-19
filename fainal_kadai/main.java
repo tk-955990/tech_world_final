@@ -25,7 +25,7 @@ public class main {
 		board[4][4] = 1;
 
 		tool.printBoard(board);
-		
+
 		game();
 
 	}
@@ -68,13 +68,13 @@ public class main {
 			}
 		}
 
-		
-		int[][] set_Stone = new int[8][8];
-		
+
+		int[][] setStone = new int[8][8];
+
 		int i = 0;
 		int j = 0;
-		set_Stone[i] = returnValue[1];
-		set_Stone[j] = returnValue[2];
+		setStone[i] = returnValue[1];
+		setStone[j] = returnValue[2];
 
 		tool.printBoard(board);
 

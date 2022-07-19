@@ -155,7 +155,7 @@ public class Tool {
 		return returnValue;
 	}
 
-	public void stone(int[][]set_Stone) {
+	public void stone(int[][]setStone) {
 
 
 	}
