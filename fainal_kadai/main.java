@@ -51,6 +51,8 @@ public class main {
 				break;
 			}
 		}
+		
+		
 
 		// 入力値のチェック[ (0は正常値),X軸,Y軸 ]
 		int[] returnValue;
@@ -67,22 +69,22 @@ public class main {
 				break;
 			}
 		}
-		
-		int[][] setStone = new int[8][8];
-		int[][] board;
-		int i = returnValue[1];
-		int j = returnValue[2];
-		
 
-		board=setStone;
-		System.out.println(setStone[i]);
-		System.out.println(setStone[j]);
+		int x = returnValue[1];
+		int y = returnValue[2];
 
-		board[i][j]=-1;
-		System.out.println(board[i][j]);
+		
+		if(checkValue==1) {
+			board[x][y]=-1;
+		}else {
+			board[x][y]=1;
+		}
+
 		tool.printBoard(board);
+		tool.count(board);
+
 
 		// コマの八方向の判定
-	}
 
+	}
 }

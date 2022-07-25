@@ -8,11 +8,11 @@ public class Tool {
 		System.out.println(" ┏━┳━┳━┳━┳━┳━┳━┳━┓");
 
 
-		for(int i=0;i<board.length;i++) {
-			System.out.print((i+1)+"┃");
-			for(int j=0;j<8;j++) {
+		for(int j=0;j<board.length;j++) {
+			System.out.print((j+1)+"┃");
+			for(int i=0;i<8;i++) {
 				if (board[i][j]==-1) {
-					System.out.print("○");
+					System.out.print("〇");
 				}else if(board[i][j]==1){
 					System.out.print("●");	
 				}else if(board[i][j]==0){
@@ -21,7 +21,7 @@ public class Tool {
 				System.out.print("┃");
 			}
 			System.out.println("");
-			if(i<board.length-1) {
+			if(j<board.length-1) {
 				System.out.println(" ┣━╋━╋━╋━╋━╋━╋━╋━┫");	
 			}else{
 				System.out.println(" ┗━┻━┻━┻━┻━┻━┻━┻━┛");
@@ -77,7 +77,7 @@ public class Tool {
 			return returnValue;
 		}
 
-		// 入力値１文字目の変換
+		// 入力値１文字目のチェック、変換
 		char charX = strInputStone.charAt(0);
 
 		switch(charX) {
@@ -134,9 +134,9 @@ public class Tool {
 			returnValue[0] = 2;
 			return returnValue;
 		}
-		System.out.println("returnValue[1]は"+returnValue[1]);
 
-		//
+		// 入力値２文字目のチェック
+
 		char charY = strInputStone.charAt(1);
 		try {
 			returnValue[2] = Integer.parseInt(String.valueOf(charY))-1;
@@ -145,7 +145,6 @@ public class Tool {
 			returnValue[0] = 2;
 			return returnValue;
 		}
-		System.out.println("returnValue[2]は"+returnValue[2]);
 
 		//
 		if(returnValue[2] < 0 || returnValue[2] > 7) {
@@ -154,11 +153,43 @@ public class Tool {
 		}
 		return returnValue;
 	}
+	
+	// コマのカウント
+	public void count (int[][] board) {
 
-	public void stone(int[] returnValue) {
+		int countB = 0;
+		int countW = 0;
+		int count0 = 0;
 
-
-		
-		return;
+		for(int i=0;i<board.length;i++) {
+			for(int j=0;j<8;j++) {
+				if (board[i][j]==-1) {
+					countB++;
+				}else if(board[i][j]==1){
+					countW++;
+				}else if(board[i][j]==0){
+					count0++;
+				}
+			}
+		}
+		System.out.println("黒: "+countB+"個");
+		System.out.println("白: "+countW+"個");
 	}
+
+/*	public void turnStone(int[][] board) {
+		turnLeftUp(board);
+	    turnUp();
+	    turnRightUp();
+	    turnLeft();
+	    turnRight();
+	    turnLeftDown();
+	    turnDown();
+	    turnRightDown();
+	}
+	
+	public void turnLeftUp(int[][] board) {
+		int  next = board[x-1][y-1];
+	}
+	
+	*/
 }
