@@ -1,5 +1,6 @@
 package kadai_final;
 
+import java.util.Random;
 import java.util.Scanner;
 
 public class main {
@@ -61,38 +62,51 @@ public class main {
 			}
 		}
 
-
-
-		// 入力値のチェック[ (0は正常値),X軸,Y軸 ]
-		int[] returnValue;
-
 		while(true) {
-			System.out.println("【コマの置く位置を決定してください】");
-			System.out.println("【　Ａ１～Ｈ８　？】");
-			System.out.println("【ｅｘ) Ｂ３　　　】");
+			if(checkValue == 2) {
+				int random1 = (int) (Math.random() * 7);
+				int random2 = (int) (Math.random() * 7);
 
-			String userInput = scanner.next();
 
-			returnValue = ivj.convertInputStone(userInput);
-			if(returnValue[0] == 0) {
-				break;
+				int x = random1;
+				int y = random2;
+				tool.turnStone(x,  y) ;
+				tool.printBoard(board);
+				tool.count(board);
+			}else {
+
+
+				// 入力値のチェック[ (0は正常値),X軸,Y軸 ]
+				int[] returnValue;
+
+				while(true) {
+					System.out.println("【コマの置く位置を決定してください】");
+					System.out.println("【　Ａ１～Ｈ８　？】");
+					System.out.println("【ｅｘ) Ｂ３　　　】");
+
+					String userInput = scanner.next();
+
+					returnValue = ivj.convertInputStone(userInput);
+					if(returnValue[0] == 0) {
+						break;
+					}
+				}
+
+				int x = returnValue[1];
+				int y = returnValue[2];
+
+
+				if(checkValue == 1) {
+					board[x][y] = -1;
+				}else {
+					board[x][y] = 1;
+				}
+
+				tool.turnStone(x,  y) ;
+				tool.printBoard(board);
+				tool.count(board);
 			}
+			// コマの八方向の判定
 		}
-
-		int x = returnValue[1];
-		int y = returnValue[2];
-
-
-		if(checkValue == 1) {
-			board[x][y] = -1;
-		}else {
-			board[x][y] = 1;
-		}
-
-		tool.turnStone(x,  y) ;
-		tool.printBoard(board);
-		tool.count(board);
-		// コマの八方向の判定
-
 	}
 }
