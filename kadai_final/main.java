@@ -15,8 +15,9 @@ public class main {
 			{0,0,0,0,0,0,0,0},
 			{0,0,0,0,0,0,0,0},
 			{0,0,0,0,0,0,0,0}}; */ 
-	static Tool tool = new Tool();
-
+	static InputValueJudgment ivj = new InputValueJudgment();
+    static Tool tool = new Tool();
+    
 	public static void main (String[] args) {
 
 		board[3][3] = 1;
@@ -39,16 +40,24 @@ public class main {
 
 		// 入力値のチェック[ 0:エラー　1:先攻　2:後攻 ]
 		int checkValue;
-
+        int humanColor;
+        int comColor;
 		while(true) {
 			System.out.println("【　先攻、後攻を決定してください　】");
 			System.out.println("【　先攻：1　　後攻：2　】");
 
 			String turnInput = scanner.next();
 
-			checkValue = tool.convertInputTurn(turnInput);
+			checkValue = ivj.convertInputTurn(turnInput);
 			if(checkValue != 0) {
 				break;
+			}
+			if(checkValue == 1) {
+				humanColor = -1;
+				comColor   = 1;
+			}else {
+				humanColor = 1;
+				comColor   = -1; 
 			}
 		}
 
@@ -64,7 +73,7 @@ public class main {
 
 			String userInput = scanner.next();
 
-			returnValue = tool.convertInputStone(userInput);
+			returnValue = ivj.convertInputStone(userInput);
 			if(returnValue[0] == 0) {
 				break;
 			}
@@ -80,7 +89,7 @@ public class main {
 			board[x][y] = 1;
 		}
 
-		tool.turnLeftUp(x,  y) ;
+		tool.turnStone(x,  y) ;
 		tool.printBoard(board);
 		tool.count(board);
 		// コマの八方向の判定
