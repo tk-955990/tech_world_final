@@ -27,12 +27,13 @@ public class main {
 		board[4][4] = 1;
 
 		tool.printBoard(board);
+		tool.count(board);
 
-		game(board);
+		game(board, tool.count(board), tool.count(board) );
 
 	}
 
-	public static void game(int[][] board) {
+	public static void game(int[][] board,int countB,int countW) {
 
 		System.out.println("********** Game Start!! **********");
 
@@ -43,6 +44,9 @@ public class main {
 		int checkValue;
         int humanColor;
         int comColor;
+		int lastTimeCountB = countB;
+		int lastTimeCountW = countW;
+
 		while(true) {
 			System.out.println("【　先攻、後攻を決定してください　】");
 			System.out.println("【　先攻：1　　後攻：2　】");
@@ -64,13 +68,33 @@ public class main {
 
 		while(true) {
 			if(checkValue == 2) {
-				int random1 = (int) (Math.random() * 7);
-				int random2 = (int) (Math.random() * 7);
+				do {
 
+					
+					Random random1 = new Random();
+					int randomValue = random1.nextInt(7);
+					Random random2 = new Random();
+					randomValue = random2.nextInt(7);
 
-				int x = random1;
-				int y = random2;
-				tool.turnStone(x,  y) ;
+					int x = random1.nextInt(7);
+					int y = random2.nextInt(7);
+
+					System.out.println("乱数X = "+ x);
+					System.out.println("乱数Y = "+ y);
+
+					
+					if(checkValue == 2) {
+						board[x][y] = -1;
+					}else {
+						board[x][y] = 1;
+					}
+
+					
+
+					tool.turnStone(x,  y) ;
+					tool.count(board);
+
+				}while((lastTimeCountB > countB)||(lastTimeCountW > countW));
 				tool.printBoard(board);
 				tool.count(board);
 			}else {

@@ -30,7 +30,7 @@ public class Tool {
 	}
 
 	// コマのカウント
-	public void count (int[][] board) {
+	public int count (int[][] board) {
 
 		int countB = 0;
 		int countW = 0;
@@ -49,6 +49,7 @@ public class Tool {
 		}
 		System.out.println("黒: "+countB+"個");
 		System.out.println("白: "+countW+"個");
+		return count0;
 	}
 
 	public void turnStone(int x, int y) {
