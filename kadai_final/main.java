@@ -44,15 +44,7 @@ public class main {
 		int checkValue;
 		int humanColor;
 		int comColor;
-
-		
-		// カウントメソッドからの戻り値（配列として）
-		int CountArray[] = tool.count(board);
-		int lastTimeCountB = CountArray[0];
-		int lastTimeCountW = CountArray[1];
-
-		System.out.println("lastTimeCountB="+lastTimeCountB);
-		System.out.println("lastTimeCountW="+lastTimeCountW);
+        int turnCheckValue = 0;
 
 		while(true) {
 			System.out.println("【　先攻、後攻を決定してください　】");
@@ -76,8 +68,10 @@ public class main {
 		while(true) {
 			// 後攻の場合
 			if(checkValue == 2) {
-				for(int i = 0;i < 4;i++) {
-
+				for(int i = 0;i < board.length;i++) {
+					turnCheckValue = tool.turnCheck(turnCheckValue, turnCheckValue,
+							turnCheckValue,turnCheckValue, turnCheckValue,
+							turnCheckValue,turnCheckValue, turnCheckValue);
 
 					Random random1  = new Random();
 					int randomValue = random1.nextInt(7);
@@ -86,12 +80,12 @@ public class main {
 
 					int x = random1.nextInt(7);
 					int y = random2.nextInt(7);
-					
-                    // デバッグコード
+
+					// デバッグコード
 					System.out.println("乱数X = "+ x);
 					System.out.println("乱数Y = "+ y);
 
-					
+
 					// Comが置こうとしてるマスが空であるかの条件分岐
 					if(board[x][y] == 0) {
 						if(checkValue == 2) {
@@ -100,24 +94,28 @@ public class main {
 							board[x][y] = 1;
 						}
 
-
-
 						tool.turnStone(x,  y) ;
-						tool.count(board);
-						
-	                    // デバッグコード
-						System.out.println("lastTimeCountB"+CountArray[0]);
-						System.out.println("lastTimeCountW"+CountArray[1]);
-					}else {
+						tool.turnCheck(turnCheckValue, turnCheckValue, turnCheckValue,
+								turnCheckValue, turnCheckValue, turnCheckValue,
+								turnCheckValue, turnCheckValue);
+						tool.printBoard(board);
+
+						// デバッグコード
+
+						System.out.println("turnCheckValue"+turnCheckValue);
+
+						// ひっくり返したコマが無かった場合
+						if(turnCheckValue == 0) {
+							// Com が選択した座標を初期化する
+							board[x][y] = 0;
+						}else {
+							continue;
+						}
+						// ひっくり返したコマがあった場合
+					}else if(turnCheckValue == 1) {
 						break;
 					}
-		//			if((lastTimeCountB > lastTimeCountB)&&(lastTimeCountW > lastTimeCountW)) {
-		//				break;
-		//			}else if((lastTimeCountB == lastTimeCountB)&&(lastTimeCountW == lastTimeCountW))
-		//				board[x][y] = 0;
-
 				}
-
 				tool.printBoard(board);
 				tool.count(board);
 				break;

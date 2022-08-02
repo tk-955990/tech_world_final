@@ -30,7 +30,7 @@ public class Tool {
 	}
 
 	// コマのカウント
-	public int[] count (int[][] board) {
+	public void count (int[][] board) {
 
 		int countB = 0;
 		int countW = 0;
@@ -50,11 +50,10 @@ public class Tool {
 		System.out.println("黒: "+countB+"個");
 		System.out.println("白: "+countW+"個");
 		
-		int[] countValues = {countB,countW};
-		return countValues;
 
 	}
 
+	// コマをひっくり返す処理
 	public void turnStone(int x, int y) {
 		turnLeftUp   (x, y);     //左上
 		turnUp       (x, y);
@@ -65,8 +64,40 @@ public class Tool {
 		turnLeftDown (x, y);
 		turnLeft     (x, y);
 	}
+	
+	// ひっくり返したコマの有無
+	public int turnCheck(int countLup, int countUp, int countRup, int countR, 
+			             int countRdown, int countDown, int countLdown, int countL) {
+		int turnCheckValue = 0;
+		int[] turnCheckArray = {countLup,countUp,countRup,countR,
+				                countRdown,countDown,countLdown,countL};
+		
+		for(int i=0; i<turnCheckArray.length;i++) {
+			if(turnCheckArray[i] > 0) {
+				turnCheckValue = 1;
+				break;
+			}
+		
+		}
+		
+		// デバッグコード
+		System.out.println("countLup"+countLup);
+		System.out.println("countUp"+countUp);
+		System.out.println("countRup"+countRup);
+		System.out.println("countR"+countR);
+		System.out.println("countRdown"+countRdown);
+		System.out.println("countDown"+countDown);
+		System.out.println("countLdown"+countLdown);
+		System.out.println("countL"+countL);
 
-	public void turnLeftUp(int x, int y) {
+
+		// ひっくり返したコマがあれば１、無ければ０を返す
+		return turnCheckValue;
+	}
+
+	public int turnLeftUp(int x, int y) {
+		int countLup = 0;
+		
 		if (y > 1 && x > 1) {
 
 			//隣のコマ
@@ -74,6 +105,7 @@ public class Tool {
 			//隣のコマが相手の色だった場合
 			if(next != main.board[x][y]) {
 				for(int i = 2;true;i++) {
+
 					if (x - i < 0 || y - i < 0 || main.board[x - i][y - i]== 0) {
 						//コマが無かった場合終了
 						break;
@@ -83,15 +115,19 @@ public class Tool {
 						for (int t = 1; t < i; t++) {
 							// 配列の要素を上書き
 							main.board[x - t][y - t] *= -1;
+							countLup++;
 						}
 						break;
 					}
 				}
 			}
 		}
+		return countLup;
 	}
 
-	public void turnUp(int x, int y) {
+	public int turnUp(int x, int y) {
+		int countUp = 0;
+
 		if (y > 1) {
 
 			int  next = main.board[x][y-1];
@@ -103,15 +139,19 @@ public class Tool {
 					}else if(main.board[x][y - i] == main.board[x][y]) {
 						for (int t = 1; t < i; t++) {
 							main.board[x][y - t] *= -1;
+							countUp++;
 						}
 						break;
 					}
 				}
 			}
 		}
+		return countUp;
 	}
 
-	public void turnRightUp(int x, int y) {
+	public int turnRightUp(int x, int y) {
+		int countRup = 0;
+
 		if (y > 1 && x < 6) {
 
 			int  next = main.board[x+1][y-1];
@@ -123,17 +163,20 @@ public class Tool {
 					}else if(main.board[x + i][y - i] == main.board[x][y]) {
 						for(int t = 1; t < i;t++) {
 							main.board[x+t][y-t] *= -1;
+							countRup++;
 						}
 						break;
 					}
 				}
 			}
 		}
+		return countRup;
 	}
 
-	public void turnRight(int x, int y) {
+	public int turnRight(int x, int y) {
+		int countR = 0;
+		
 		if (x < 6) {
-
 
 			int  next = main.board[x+1][y];
 
@@ -144,15 +187,19 @@ public class Tool {
 					} else if (main.board[x + i][y]== main.board[x][y]) {
 						for (int t = 1; t < i; t++) {
 							main.board[x + t][y] *= -1;
+							countR++;
 						}
 						break;
 					}
 				}
 			}
 		}
+		return countR;
 	}
 
-	public void turnRightDown(int x, int y) {
+	public int turnRightDown(int x, int y) {
+		int countRdown = 0;
+		
 		if (y < 6 && x < 6) {
 
 			int  next = main.board[x+1][y+1];
@@ -164,15 +211,19 @@ public class Tool {
 					}else if(main.board[x + i][y + i] == main.board[x][y]) {
 						for(int t = 1; t < i;t++) {
 							main.board[x+t][y+t] *= -1;
+							countRdown++;
 						}
 						break;
 					}
 				}
 			}
 		}
+		return countRdown;
 	}
 
-	public void turnDown(int x, int y) {
+	public int turnDown(int x, int y) {
+		int countDown  = 0; 
+		
 		if (y < 6) {
 
 			int  next = main.board[x][y+1];
@@ -184,15 +235,19 @@ public class Tool {
 					}else if(main.board[x][y + i] == main.board[x][y]) {
 						for (int t = 1; t < i; t++) {
 							main.board[x][y + t] *= -1;
+							countDown++;
 						}
 						break;
 					}
 				}
 			}
 		}
+		return countDown;
 	}
 
-	public void turnLeftDown(int x, int y) {
+	public int turnLeftDown(int x, int y) {
+		int countLdown = 0;
+		
 		if (y < 6 && x > 1) {
 
 			int  next = main.board[x-1][y+1];
@@ -204,15 +259,19 @@ public class Tool {
 					}else if(main.board[x - i][y + i] == main.board[x][y]) {
 						for(int t = 1; t < i;t++) {
 							main.board[x-t][y+t] *= -1;
+							countLdown++;
 						}
 						break;
 					}
 				}
 			}
 		}
+		return countLdown;
 	}
 
-	public void turnLeft(int x, int y) {
+	public int turnLeft(int x, int y) {
+		int countL = 0;
+		
 		if (x > 1) {
 
 			int  next = main.board[x-1][y];
@@ -224,11 +283,13 @@ public class Tool {
 					} else if (main.board[x - i][y]== main.board[x][y]) {
 						for (int t = 1; t < i; t++) {
 							main.board[x - t][y] *= -1;
+							countL++;
 						}
 						break;
 					}
 				}
 			}
 		}
+		return countL;
 	}
 }
