@@ -30,7 +30,7 @@ public class Tool {
 	}
 
 	// コマのカウント
-	public int count (int[][] board) {
+	public int[] count (int[][] board) {
 
 		int countB = 0;
 		int countW = 0;
@@ -49,7 +49,10 @@ public class Tool {
 		}
 		System.out.println("黒: "+countB+"個");
 		System.out.println("白: "+countW+"個");
-		return count0;
+		
+		int[] countValues = {countB,countW};
+		return countValues;
+
 	}
 
 	public void turnStone(int x, int y) {
@@ -64,148 +67,166 @@ public class Tool {
 	}
 
 	public void turnLeftUp(int x, int y) {
-		//隣のコマ
-		int  next = main.board[x-1][y-1];
-		//隣のコマが相手の色だった場合
-		if(next != main.board[x][y]) {
-			for(int i = 2;true;i++) {
-				if (x - i < 0 || y - i < 0 || main.board[x - i][y - i]== 0) {
-					//コマが無かった場合終了
-					break;
-				} else if (main.board[x - i][y - i]== main.board[x][y]) {
-					//コマが自分の色だった場合
-					//間のコマをひっくり返す
-					for (int t = 1; t < i; t++) {
-						// 配列の要素を上書き
-						main.board[x - t][y - t] *= -1;
+		if (y > 1 && x > 1) {
+
+			//隣のコマ
+			int  next = main.board[x-1][y-1];
+			//隣のコマが相手の色だった場合
+			if(next != main.board[x][y]) {
+				for(int i = 2;true;i++) {
+					if (x - i < 0 || y - i < 0 || main.board[x - i][y - i]== 0) {
+						//コマが無かった場合終了
+						break;
+					} else if (main.board[x - i][y - i]== main.board[x][y]) {
+						//コマが自分の色だった場合
+						//間のコマをひっくり返す
+						for (int t = 1; t < i; t++) {
+							// 配列の要素を上書き
+							main.board[x - t][y - t] *= -1;
+						}
+						break;
 					}
-					break;
 				}
 			}
 		}
 	}
 
 	public void turnUp(int x, int y) {
+		if (y > 1) {
 
-		int  next = main.board[x][y-1];
+			int  next = main.board[x][y-1];
 
-		if(next != main.board[x][y]) {
-			for(int i = 2;true;i++) {
-				if(y - i < 0 || main.board[x][y-i] == 0) {
-					break;
-				}else if(main.board[x][y - i] == main.board[x][y]) {
-					for (int t = 1; t < i; t++) {
-						main.board[x][y - t] *= -1;
+			if(next != main.board[x][y]) {
+				for(int i = 2;true;i++) {
+					if(y - i < 0 || main.board[x][y-i] == 0) {
+						break;
+					}else if(main.board[x][y - i] == main.board[x][y]) {
+						for (int t = 1; t < i; t++) {
+							main.board[x][y - t] *= -1;
+						}
+						break;
 					}
-					break;
 				}
 			}
 		}
 	}
 
 	public void turnRightUp(int x, int y) {
+		if (y > 1 && x < 6) {
 
-		int  next = main.board[x+1][y-1];
+			int  next = main.board[x+1][y-1];
 
-		if(next != main.board[x][y]) {
-			for(int i = 2;true;i++) {
-				if(x + i < 0 || y - i < 0 || main.board[x+i][y-i] == 0) {
-					break;
-				}else if(main.board[x + i][y - i] == main.board[x][y]) {
-					for(int t = 1; t < i;t++) {
-						main.board[x+t][y-t] *= -1;
+			if(next != main.board[x][y]) {
+				for(int i = 2;true;i++) {
+					if(x + i < 0 || y - i < 0 || main.board[x+i][y-i] == 0) {
+						break;
+					}else if(main.board[x + i][y - i] == main.board[x][y]) {
+						for(int t = 1; t < i;t++) {
+							main.board[x+t][y-t] *= -1;
+						}
+						break;
 					}
-					break;
 				}
 			}
 		}
 	}
 
 	public void turnRight(int x, int y) {
+		if (x < 6) {
 
-		int  next = main.board[x+1][y];
 
-		if(next != main.board[x][y]) {
-			for(int i = 2;true;i++) {
-				if (x + i < 0 || main.board[x + i][y]== 0) {
-					break;
-				} else if (main.board[x + i][y]== main.board[x][y]) {
-					for (int t = 1; t < i; t++) {
-						main.board[x + t][y] *= -1;
+			int  next = main.board[x+1][y];
+
+			if(next != main.board[x][y]) {
+				for(int i = 2;true;i++) {
+					if (x + i < 0 || main.board[x + i][y]== 0) {
+						break;
+					} else if (main.board[x + i][y]== main.board[x][y]) {
+						for (int t = 1; t < i; t++) {
+							main.board[x + t][y] *= -1;
+						}
+						break;
 					}
-					break;
 				}
 			}
 		}
 	}
 
 	public void turnRightDown(int x, int y) {
+		if (y < 6 && x < 6) {
 
-		int  next = main.board[x+1][y+1];
+			int  next = main.board[x+1][y+1];
 
-		if(next != main.board[x][y]) {
-			for(int i = 2;true;i++) {
-				if(x + i < 0 || y + i < 0 || main.board[x+i][y+i] == 0) {
-					break;
-				}else if(main.board[x + i][y + i] == main.board[x][y]) {
-					for(int t = 1; t < i;t++) {
-						main.board[x+t][y+t] *= -1;
+			if(next != main.board[x][y]) {
+				for(int i = 2;true;i++) {
+					if(x + i < 0 || y + i < 0 || main.board[x+i][y+i] == 0) {
+						break;
+					}else if(main.board[x + i][y + i] == main.board[x][y]) {
+						for(int t = 1; t < i;t++) {
+							main.board[x+t][y+t] *= -1;
+						}
+						break;
 					}
-					break;
 				}
 			}
 		}
 	}
 
 	public void turnDown(int x, int y) {
+		if (y < 6) {
 
-		int  next = main.board[x][y+1];
+			int  next = main.board[x][y+1];
 
-		if(next != main.board[x][y]) {
-			for(int i = 2;true;i++) {
-				if(y + i < 0 || main.board[x][y+i] == 0) {
-					break;
-				}else if(main.board[x][y + i] == main.board[x][y]) {
-					for (int t = 1; t < i; t++) {
-						main.board[x][y + t] *= -1;
+			if(next != main.board[x][y]) {
+				for(int i = 2;true;i++) {
+					if(y + i < 0 || main.board[x][y+i] == 0) {
+						break;
+					}else if(main.board[x][y + i] == main.board[x][y]) {
+						for (int t = 1; t < i; t++) {
+							main.board[x][y + t] *= -1;
+						}
+						break;
 					}
-					break;
 				}
 			}
 		}
 	}
 
 	public void turnLeftDown(int x, int y) {
+		if (y < 6 && x > 1) {
 
-		int  next = main.board[x-1][y+1];
+			int  next = main.board[x-1][y+1];
 
-		if(next != main.board[x][y]) {
-			for(int i = 2;true;i++) {
-				if(x - i < 0 || y + i < 0 || main.board[x-i][y+i] == 0) {
-					break;
-				}else if(main.board[x - i][y + i] == main.board[x][y]) {
-					for(int t = 1; t < i;t++) {
-						main.board[x-t][y+t] *= -1;
+			if(next != main.board[x][y]) {
+				for(int i = 2;true;i++) {
+					if(x - i < 0 || y + i < 0 || main.board[x-i][y+i] == 0) {
+						break;
+					}else if(main.board[x - i][y + i] == main.board[x][y]) {
+						for(int t = 1; t < i;t++) {
+							main.board[x-t][y+t] *= -1;
+						}
+						break;
 					}
-					break;
 				}
 			}
 		}
 	}
 
 	public void turnLeft(int x, int y) {
+		if (x > 1) {
 
-		int  next = main.board[x-1][y];
+			int  next = main.board[x-1][y];
 
-		if(next != main.board[x][y]) {
-			for(int i = 2;true;i++) {
-				if (x - i < 0 || main.board[x - i][y]== 0) {
-					break;
-				} else if (main.board[x - i][y]== main.board[x][y]) {
-					for (int t = 1; t < i; t++) {
-						main.board[x - t][y] *= -1;
+			if(next != main.board[x][y]) {
+				for(int i = 2;true;i++) {
+					if (x - i < 0 || main.board[x - i][y]== 0) {
+						break;
+					} else if (main.board[x - i][y]== main.board[x][y]) {
+						for (int t = 1; t < i; t++) {
+							main.board[x - t][y] *= -1;
+						}
+						break;
 					}
-					break;
 				}
 			}
 		}
