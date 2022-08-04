@@ -54,242 +54,208 @@ public class Tool {
 	}
 
 	// コマをひっくり返す処理
-	public void turnStone(int x, int y) {
-		turnLeftUp   (x, y);     //左上
-		turnUp       (x, y);
-		turnRightUp  (x, y);
-		turnRight    (x, y);
-		turnRightDown(x, y);
-		turnDown     (x, y);
-		turnLeftDown (x, y);
-		turnLeft     (x, y);
-	}
-	
-	// ひっくり返したコマの有無
-	public int turnCheck(int countLup, int countUp, int countRup, int countR, 
-			             int countRdown, int countDown, int countLdown, int countL) {
-		int turnCheckValue = 0;
-		int[] turnCheckArray = {countLup,countUp,countRup,countR,
-				                countRdown,countDown,countLdown,countL};
-		
-		for(int i=0; i<turnCheckArray.length;i++) {
-			if(turnCheckArray[i] > 0) {
-				turnCheckValue = 1;
-				break;
-			}
-		
-		}
-		
-		// デバッグコード
-		System.out.println("countLup"+countLup);
-		System.out.println("countUp"+countUp);
-		System.out.println("countRup"+countRup);
-		System.out.println("countR"+countR);
-		System.out.println("countRdown"+countRdown);
-		System.out.println("countDown"+countDown);
-		System.out.println("countLdown"+countLdown);
-		System.out.println("countL"+countL);
-
-
-		// ひっくり返したコマがあれば１、無ければ０を返す
-		return turnCheckValue;
+	public void turnStone(int a, int b, int stoneColor) {
+		turnLeftUp   (a, b, stoneColor);     //左上
+		turnUp       (a, b, stoneColor);
+	 	turnRightUp  (a, b, stoneColor);
+		turnRight    (a, b, stoneColor);
+		turnRightDown(a, b, stoneColor);
+		turnDown     (a, b, stoneColor);
+		turnLeftDown (a, b, stoneColor);
+		turnLeft     (a, b, stoneColor);
 	}
 
-	public int turnLeftUp(int x, int y) {
-		int countLup = 0;
-		
-		if (y > 1 && x > 1) {
+	public void turnLeftUp(int a, int b,int stoneColor) {
+		// Comが置こうとしてるマスが空であるかの条件分岐
+		if(main.board[a][b] == 0) {
+			if (b > 1 && a > 1) {
 
-			//隣のコマ
-			int  next = main.board[x-1][y-1];
-			//隣のコマが相手の色だった場合
-			if(next != main.board[x][y]) {
-				for(int i = 2;true;i++) {
+				//隣のコマ
+				int  next = main.board[a-1][b-1];
+				//隣のコマが相手の色だった場合
+				if((next != stoneColor)&&(next != 0)) {
+					for(int i = 2;true;i++) {
 
-					if (x - i < 0 || y - i < 0 || main.board[x - i][y - i]== 0) {
-						//コマが無かった場合終了
-						break;
-					} else if (main.board[x - i][y - i]== main.board[x][y]) {
-						//コマが自分の色だった場合
-						//間のコマをひっくり返す
-						for (int t = 1; t < i; t++) {
-							// 配列の要素を上書き
-							main.board[x - t][y - t] *= -1;
-							countLup++;
+						if (a - i < 0 || b - i < 0 || main.board[a - i][b - i]== 0) {
+							//コマが無かった場合終了
+							break;
+						} else if (main.board[a - i][b - i]== stoneColor) {
+							//コマが自分の色だった場合
+							//間のコマをひっくり返す
+							for (int t = 1; t < i; t++) {
+								// 配列の要素を上書き
+								main.board[a - t][b - t] *= -1;
+								main.board[a][b] = stoneColor;
+							}
+							break;
 						}
-						break;
 					}
 				}
 			}
 		}
-		return countLup;
 	}
 
-	public int turnUp(int x, int y) {
-		int countUp = 0;
+	public void turnUp(int a, int b, int stoneColor) {
+		if(main.board[a][b] == 0) {
 
-		if (y > 1) {
+			if (b > 1) {
 
-			int  next = main.board[x][y-1];
+				int  next = main.board[a][b-1];
 
-			if(next != main.board[x][y]) {
-				for(int i = 2;true;i++) {
-					if(y - i < 0 || main.board[x][y-i] == 0) {
-						break;
-					}else if(main.board[x][y - i] == main.board[x][y]) {
-						for (int t = 1; t < i; t++) {
-							main.board[x][y - t] *= -1;
-							countUp++;
+				if((next != stoneColor)&&(next != 0)) {
+					for(int i = 2;true;i++) {
+						if(b - i < 0 || main.board[a][b-i] == 0) {
+							break;
+						}else if(main.board[a][b - i] == stoneColor) {
+							for (int t = 1; t < i; t++) {
+								main.board[a][b - t] *= -1;
+								main.board[a][b] = stoneColor;
+							}
+							break;
 						}
-						break;
 					}
 				}
 			}
 		}
-		return countUp;
 	}
 
-	public int turnRightUp(int x, int y) {
-		int countRup = 0;
+	public void turnRightUp(int a, int b, int stoneColor) {
+		if(main.board[a][b] == 0) {
 
-		if (y > 1 && x < 6) {
+			if (a < 6 && b> 1) {
 
-			int  next = main.board[x+1][y-1];
+				int  next = main.board[a+1][b-1];
 
-			if(next != main.board[x][y]) {
-				for(int i = 2;true;i++) {
-					if(x + i < 0 || y - i < 0 || main.board[x+i][y-i] == 0) {
-						break;
-					}else if(main.board[x + i][y - i] == main.board[x][y]) {
-						for(int t = 1; t < i;t++) {
-							main.board[x+t][y-t] *= -1;
-							countRup++;
+				if((next != stoneColor)&&(next != 0)) {
+					for(int i = 2;true;i++) {
+						if(a + i < 0 || b - i < 0 || main.board[a+i][b-i] == 0) {
+							break;
+						}else if(main.board[a + i][b - i] == stoneColor) {
+							for(int t = 1; t < i;t++) {
+								main.board[a+t][b-t] *= -1;
+								main.board[a][b] = stoneColor;
+							}
+							break;
 						}
-						break;
 					}
 				}
 			}
 		}
-		return countRup;
 	}
 
-	public int turnRight(int x, int y) {
-		int countR = 0;
-		
-		if (x < 6) {
+	public void turnRight(int a, int b, int stoneColor) {
+		if(main.board[a][b] == 0) {
+			if (a < 6) {
 
-			int  next = main.board[x+1][y];
+				int  next = main.board[a+1][b];
 
-			if(next != main.board[x][y]) {
-				for(int i = 2;true;i++) {
-					if (x + i < 0 || main.board[x + i][y]== 0) {
-						break;
-					} else if (main.board[x + i][y]== main.board[x][y]) {
-						for (int t = 1; t < i; t++) {
-							main.board[x + t][y] *= -1;
-							countR++;
+				if((next != stoneColor)&&(next != 0)) {
+					for(int i = 2;true;i++) {
+						if (a + i < 0 || main.board[a + i][b]== 0) {
+							break;
+						} else if (main.board[a + i][b]== stoneColor) {
+							for (int t = 1; t < i; t++) {
+								main.board[a + t][b] *= -1;
+								main.board[a][b] = stoneColor;
+							}
+							break;
 						}
-						break;
 					}
 				}
 			}
 		}
-		return countR;
 	}
 
-	public int turnRightDown(int x, int y) {
-		int countRdown = 0;
-		
-		if (y < 6 && x < 6) {
+	public void turnRightDown(int a, int b, int stoneColor) {
+		if(main.board[a][b] == 0) {
+			if (b < 6 && a < 6) {
 
-			int  next = main.board[x+1][y+1];
+				int  next = main.board[a+1][b+1];
 
-			if(next != main.board[x][y]) {
-				for(int i = 2;true;i++) {
-					if(x + i < 0 || y + i < 0 || main.board[x+i][y+i] == 0) {
-						break;
-					}else if(main.board[x + i][y + i] == main.board[x][y]) {
-						for(int t = 1; t < i;t++) {
-							main.board[x+t][y+t] *= -1;
-							countRdown++;
+				if((next != stoneColor)&&(next != 0)) {
+					for(int i = 2;true;i++) {
+						if(a + i < 0 || b + i < 0 || main.board[a+i][b+i] == 0) {
+							break;
+						}else if(main.board[a + i][b + i] == stoneColor) {
+							for(int t = 1; t < i;t++) {
+								main.board[a+t][b+t] *= -1;
+								main.board[a][b] = stoneColor;
+
+							}
+							break;
 						}
-						break;
 					}
 				}
 			}
 		}
-		return countRdown;
 	}
 
-	public int turnDown(int x, int y) {
-		int countDown  = 0; 
-		
-		if (y < 6) {
+	public void turnDown(int a, int b, int stoneColor) {
+		if(main.board[a][b] == 0) {
+			if (b < 6) {
 
-			int  next = main.board[x][y+1];
+				int  next = main.board[a][b+1];
 
-			if(next != main.board[x][y]) {
-				for(int i = 2;true;i++) {
-					if(y + i < 0 || main.board[x][y+i] == 0) {
-						break;
-					}else if(main.board[x][y + i] == main.board[x][y]) {
-						for (int t = 1; t < i; t++) {
-							main.board[x][y + t] *= -1;
-							countDown++;
+				if((next != stoneColor)&&(next != 0)) {
+					for(int i = 2;true;i++) {
+						if(b + i < 0 || main.board[a][b+i] == 0) {
+							break;
+						}else if(main.board[a][b + i] == stoneColor) {
+							for (int t = 1; t < i; t++) {
+								main.board[a][b + t] *= -1;
+								main.board[a][b] = stoneColor;
+							}
+							break;
 						}
-						break;
 					}
 				}
 			}
 		}
-		return countDown;
 	}
 
-	public int turnLeftDown(int x, int y) {
-		int countLdown = 0;
-		
-		if (y < 6 && x > 1) {
+	public void turnLeftDown(int a, int b, int stoneColor) {
+		if(main.board[a][b] == 0) {
+			if (b < 6 && a > 1) {
 
-			int  next = main.board[x-1][y+1];
+				int  next = main.board[a-1][b+1];
 
-			if(next != main.board[x][y]) {
-				for(int i = 2;true;i++) {
-					if(x - i < 0 || y + i < 0 || main.board[x-i][y+i] == 0) {
-						break;
-					}else if(main.board[x - i][y + i] == main.board[x][y]) {
-						for(int t = 1; t < i;t++) {
-							main.board[x-t][y+t] *= -1;
-							countLdown++;
+				if((next != stoneColor)&&(next != 0)) {
+					for(int i = 2;true;i++) {
+						if(a - i < 0 || b + i < 0 || main.board[a-i][b+i] == 0) {
+							break;
+						}else if(main.board[a - i][b + i] == stoneColor) {
+							for(int t = 1; t < i;t++) {
+								main.board[a-t][b+t] *= -1;
+								main.board[a][b] = stoneColor;
+							}
+							break;
 						}
-						break;
 					}
 				}
 			}
 		}
-		return countLdown;
 	}
 
-	public int turnLeft(int x, int y) {
-		int countL = 0;
-		
-		if (x > 1) {
+	public void turnLeft(int a, int b, int stoneColor) {
+		if(main.board[a][b] == 0) {
+			if (a > 1) {
 
-			int  next = main.board[x-1][y];
+				int  next = main.board[a-1][b];
 
-			if(next != main.board[x][y]) {
-				for(int i = 2;true;i++) {
-					if (x - i < 0 || main.board[x - i][y]== 0) {
-						break;
-					} else if (main.board[x - i][y]== main.board[x][y]) {
-						for (int t = 1; t < i; t++) {
-							main.board[x - t][y] *= -1;
-							countL++;
+				if((next != stoneColor)&&(next != 0)) {
+					for(int i = 2;true;i++) {
+						if (a - i < 0 || main.board[a - i][b]== 0) {
+							break;
+						} else if (main.board[a - i][b]== stoneColor) {
+							for (int t = 1; t < i; t++) {
+								main.board[a - t][b] *= -1;
+								main.board[a][b] = stoneColor;
+							}
+							break;
 						}
-						break;
 					}
 				}
 			}
 		}
-		return countL;
 	}
 }
