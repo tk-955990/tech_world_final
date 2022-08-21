@@ -43,6 +43,15 @@ public class InputValueJudgment {
 
 		int[] returnValue = new int[3];
 
+		switch(strInputStone) {
+		case "ZZ":
+		case "zz":
+		case "ℤℤ":
+		case "ｚｚ":
+		    System.out.println("---------- パスしました -----------");
+		    returnValue[0] = 4;
+			return returnValue;
+		}
 		// 文字数チェック
 		if(strInputStone.length() != 2) {
 			System.out.println("入力文字数が間違っています");
@@ -120,7 +129,7 @@ public class InputValueJudgment {
 			return returnValue;
 		}
 
-		//
+		
 		if(returnValue[2] < 0 || returnValue[2] > 7) {
 			System.out.println("指定したマスには置けません");
 			returnValue[0] = 3;

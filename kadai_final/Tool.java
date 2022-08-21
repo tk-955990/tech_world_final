@@ -2,6 +2,7 @@ package kadai_final;
 
 public class Tool {
 
+	// ボードの表示
 	public void printBoard(int[][] board){
 
 		System.out.println("   A   B   C   D   E   F   G   H");
@@ -29,12 +30,14 @@ public class Tool {
 	}
 
 	// コマのカウント
-	public void count (int[][] board) {
+	public int count (int[][] board) {
 
 		int countB = 0;
 		int countW = 0;
 		int count0 = 0;
 
+		int exitDecisionValue = 0;
+		
 		for(int i=0;i<board.length;i++) {
 			for(int j = 0;j<8;j++) {
 				if (board[i][j] == -1) {
@@ -48,20 +51,21 @@ public class Tool {
 		}
 		System.out.println("黒: "+countB+"個");
 		System.out.println("白: "+countW+"個");
+		
+		// 白黒それぞれの勝敗判定
+		if(((countB)+(countW)+(count0)==64)&&(countB > countW)
+			||(countB > countW)	
+				) {
+			exitDecisionValue = 1;	
+		}else if(((countB)+(countW)+(count0)==64)&&(countB < countW)
+			||(countB < countW)	
+				) {
+			exitDecisionValue = 2;	
+		}
+		return exitDecisionValue;
 	}
 
 	// コマをひっくり返す処理
-	public void turnStone(int a, int b, int stoneColor) {
-		turnLeftUp   (a, b, stoneColor);     //左上
-		turnUp       (a, b, stoneColor);
-		turnRightUp  (a, b, stoneColor);
-		turnRight    (a, b, stoneColor);
-		turnRightDown(a, b, stoneColor);
-		turnDown     (a, b, stoneColor);
-		turnLeftDown (a, b, stoneColor);
-		turnLeft     (a, b, stoneColor);
-	}
-
 	public int turnLeftUp(int a, int b,int stoneColor) {
 		
 		int turnCount = 0;
