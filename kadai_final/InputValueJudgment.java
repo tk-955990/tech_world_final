@@ -10,7 +10,7 @@ public class InputValueJudgment {
 
 		// 文字数チェック
 		if(strInputTurn.length() != 1) {
-			System.out.println("入力値が間違っています");
+			System.out.println("おいおい！！　入力値が間違ってるよー");
 			checkValue = 0;
 			return checkValue;
 		}
@@ -21,16 +21,16 @@ public class InputValueJudgment {
 		switch(charTurn) {
 		case '1':
 		case '１':
-			System.out.println("あなたは先攻です");
+			System.out.println("よっしゃ先攻ね！！　攻めてこー");
 			checkValue = 1;
 			break;
 		case '2':
 		case '２':
-			System.out.println("あなたは後攻です");
+			System.out.println("後攻かー よし！！　相手の出方見てこー");
 			checkValue = 2;
 			break;
 		default:
-			System.out.println("入力値が間違っています");
+			System.out.println("おいおい！！　入力値が間違ってるよー");
 			checkValue = 0;
 		}
 		return checkValue;
@@ -48,14 +48,13 @@ public class InputValueJudgment {
 		case "zz":
 		case "ℤℤ":
 		case "ｚｚ":
-		    System.out.println("---------- パスしました -----------");
 		    returnValue[0] = 4;
 			return returnValue;
 		}
 		// 文字数チェック
 		if(strInputStone.length() != 2) {
-			System.out.println("入力文字数が間違っています");
-			System.out.println("二文字で入力してください");
+			System.out.println("入力文字数 ちゃんと考えてみー");
+			System.out.println("二文字に決まっとるやん！！");
 			returnValue[0] = 1;
 			return returnValue;
 		}
@@ -113,7 +112,7 @@ public class InputValueJudgment {
 			returnValue[1] = 7;
 			break;
 		default:
-			System.out.println("入力値が間違っています");
+			System.out.println("こんな入力値あるか　ボケ！！　");
 			returnValue[0] = 2;
 			return returnValue;
 		}
@@ -124,14 +123,12 @@ public class InputValueJudgment {
 		try {
 			returnValue[2] = Integer.parseInt(String.valueOf(charY))-1;
 		}catch(NumberFormatException e) {
-			System.out.println("入力値が間違っています");
+			System.out.println("こんな入力値あるか　ボケ！！　");
 			returnValue[0] = 2;
 			return returnValue;
 		}
-
-		
 		if(returnValue[2] < 0 || returnValue[2] > 7) {
-			System.out.println("指定したマスには置けません");
+			System.out.println("あかんあかん！！　そこ置けないよ！！");
 			returnValue[0] = 3;
 		}
 		return returnValue;

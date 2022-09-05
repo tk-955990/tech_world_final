@@ -9,6 +9,8 @@ public class main {
 
 	static InputValueJudgment ivj = new InputValueJudgment();
 	static Tool tool = new Tool();
+
+	static int[][] tempBoard = new int[8][8];
 	public static void main (String[] args) {
 
 		board[3][3] = 1;
@@ -100,10 +102,11 @@ public class main {
 					}
 				}
 				if(count == 0) {
-					System.out.println("------- Com はパスしました --------");
+					System.out.println("------- Ｃｏｍｐｕｔｅｒ --------");
+					System.out.println("------- 　パスしたってさ --------");
 					passCount++;
 				}
-				
+
 				// 両者ともパスした場合
 				if(passCount == 2) {
 
@@ -140,8 +143,6 @@ public class main {
 
 
 					int count = 0;
-					a = returnValue[1];
-					b = returnValue[2];
 
 					if(checkValue == 1) {
 						stoneColor  = -1;
@@ -151,40 +152,103 @@ public class main {
 
 					// パスが選択された場合
 					if(returnValue[0] == 4) {
-						passCount++;
-						if(passCount == 2) {
+						
+						
+						// 盤面のコピー作成
+						for(int i=0;i<8;i++) {
+							tempBoard[i] = board[i].clone();
+						}
 
-							if((stoneColor  == -1)&&(exitDecisionValue == 1)) {
-								System.out.println("------------ You Win !! -----------");
-							}else if((stoneColor  == 1)&&(exitDecisionValue == 1)) {
-								System.out.println("------------ Game Over ------------");
-							}else if((stoneColor  == -1)&&(exitDecisionValue == 2)) {
-								System.out.println("------------ Game Over ------------");
-							}else if((stoneColor  == 1)&&(exitDecisionValue == 2)) {
-								System.out.println("------------ You Win !! -----------");
+						// パスが出来るかの判定
+						
+						for(b = 0;b < 8;b++) {
+							count = 0 ; 
+							for(a = 0;a < 8;a++) {
+								
+								if (a > 7 || b > 7) 
+									break;
+
+								if((main.board[a][b] != 1)&&(main.board[a][b] !=-1)) {
+									count += tool.turnLeftUp   (a, b, stoneColor);
+									count += tool.turnUp       (a, b, stoneColor);
+									count += tool.turnRightUp  (a, b, stoneColor);
+									count += tool.turnRight    (a, b, stoneColor);
+									count += tool.turnRightDown(a, b, stoneColor);
+									count += tool.turnDown     (a, b, stoneColor);
+									count += tool.turnLeftDown (a, b, stoneColor);
+									count += tool.turnLeft     (a, b, stoneColor);
+								}
+								if(count > 0) {
+									break;
+								}
+							}
+							if(count > 0) {
+								break;
+							}
+						}
+						if(count > 0) {
+							
+							// パスが不可の場合、盤面を戻す
+							for(int i=0;i<8;i++) {
+								board[i] = tempBoard[i].clone();
+							}
+
+							returnValue[0] = 3; 
+
+							System.out.println("------- パスは出来ないよ！！ --------");
+							System.out.println("--------- よく考えてみー！！ --------");
+							continue;
+						}else if(count == 0) {
+
+							// パスが可能だった場合
+							System.out.println("------- 　　OK パスね！！ -----------");
+							System.out.println("------- 次頑張っていこ！！ ----------");
+							
+							// 終了判定及び勝敗判定
+							passCount++;
+							if(passCount == 2) {
+
+								if((stoneColor  == -1)&&(exitDecisionValue == 1)) {
+									System.out.println("------------- You Win !! ------------");
+									System.out.println("--------　やったやん！！ ------------");
+								}else if((stoneColor  == 1)&&(exitDecisionValue == 1)) {
+									System.out.println("------------- Game Over -------------");
+									System.out.println("--------　何やっとんねん！！ --------");
+								}else if((stoneColor  == -1)&&(exitDecisionValue == 2)) {
+									System.out.println("------------- Game Over -------------");
+									System.out.println("--------　何やっとんねん！！ --------");
+								}else if((stoneColor  == 1)&&(exitDecisionValue == 2)) {
+									System.out.println("------------- You Win !! ------------");
+									System.out.println("--------　やったやん！！ ------------");
+								}
+								break;
 							}
 							break;
 						}
-						break;
 					}
-					count += tool.turnLeftUp   (a, b, stoneColor);
-					count += tool.turnUp       (a, b, stoneColor);
-					count += tool.turnRightUp  (a, b, stoneColor);
-					count += tool.turnRight    (a, b, stoneColor);
-					count += tool.turnRightDown(a, b, stoneColor);
-					count += tool.turnDown     (a, b, stoneColor);
-					count += tool.turnLeftDown (a, b, stoneColor);
-					count += tool.turnLeft     (a, b, stoneColor);
 
-					// ひっくり返せないマスを指定した場合
-					if(count == 0) {
-						returnValue[0] = 3; 
-						System.out.println("指定したマスには置けません!!!");
+					if((returnValue[0] != 3)&&(returnValue[0] != 4)) {
+						a = returnValue[1];
+						b = returnValue[2];
+						count += tool.turnLeftUp   (a, b, stoneColor);
+						count += tool.turnUp       (a, b, stoneColor);
+						count += tool.turnRightUp  (a, b, stoneColor);
+						count += tool.turnRight    (a, b, stoneColor);
+						count += tool.turnRightDown(a, b, stoneColor);
+						count += tool.turnDown     (a, b, stoneColor);
+						count += tool.turnLeftDown (a, b, stoneColor);
+						count += tool.turnLeft     (a, b, stoneColor);
+
+						// ひっくり返せないマスを指定した場合
+						if(count == 0) {
+							returnValue[0] = 3; 
+							System.out.println("コマ置けないよー　しっかりしてー");
+						}
+						if(returnValue[0] == 0) {
+							break;
+						}
+						passCount = 0;
 					}
-					if(returnValue[0] == 0) {
-						break;
-					}
-					passCount = 0;
 				}
 				if(passCount == 2) {
 					break;
